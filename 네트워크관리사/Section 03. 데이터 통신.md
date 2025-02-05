@@ -1,0 +1,296 @@
+# 정보신호
+
+## 아날로그 신호와 디지털 신호
+
+![[Pasted image 20250205154014.png]]
+[사진 출처](https://www.shutterstock.com/ko/image-vector/vector-scientific-educational-scheme-diagram-analog-1928953247)
+
+### 아날로그 신호
+- <mark style="background: #FF5582A6;">연속성</mark> - 시간에 따라 끊김 없이 변화한다 
+- <mark style="background: #ADCCFFA6;">무한한 값</mark> - 특정 범위 내에서 어떤 값이든 가질 수 있다 
+- 연속적으로 변화하는 전기파 
+- 아날로그 신호는 거리가 멀어지면 점점 <mark style="background: #FFB86CA6;">감쇄</mark>되는 현상이 발생한다
+- 예시: 소리, 빛, 온도 
+
+### 디지털 신호
+- <mark style="background: #FF5582A6;">불연속성</mark> - 신호가 특정 레벨 사이를 급격하게 전환한다
+- <mark style="background: #ADCCFFA6;">이진성 </mark>- 대부분 두가지 상태 만을 가진다. (High/Low or 0/1)
+	- 예외 case: 멀티레벨 디지털 신호 (위에 그림과 같음)
+- 디지털 신호는 아날로그에 비해 <mark style="background: #FFB86CA6;">외부 잡음의 영향을 덜 받는다</mark> 
+- 예시: 컴퓨터, 플래시 메모리 
+
+## 신호 변환 방식
+
+### Case 1. Analog signal from analog
+![[Pasted image 20250205160431.png]]
+[이미지 created by Claude]() 
+
+```ad-example
+title: 옛날 아날로그 전화기
+
+**Input**: 목소리 (Analog Signal) 
+**Convertor**: 전화기
+**Output**: 소리 (Analog Signal)
+
+옛날 전화기는 목소리 -> 전기 신호 -> 증폭(Repeater) -> 전송 -> 스피커 방식으로 동작했다 
+일정 거리마다 증폭기를 설치해서, 신호가 약해질때마다 증폭을 했다. 
+
+> 이때 사용된 증폭기를 아날로그 신호 중계기 (Signal Repeater) 라고 한다. 아날로그 신호를 단순 증폭해서 다음 단계로 넘겨주는 장치이다. 신호와 함께 잡음도 증폭되어, 여러 중계기 단을 거치면 잡음이 점점 누적된다. 
+>
+>[자료출처](http://www.ktword.co.kr/test/view/view.php?m_temp1=446&id=447)
+
+```
+
+```ad-question
+title: 신호가 줄어드는걸 증폭기가 어떻게 감지 했을까?
+
+아날로그 증폭기에는 자동 이득 제어 (AGC, Automatic Gain Control) 라는 회로를 사용했다. 
+
+> AGC는 입력 레벨 변동에도 출력 레벨이 상대적으로 일정한 값을 유지하는 제어회로다. 입력 레벨이 지나치게 요동치지 않도록, 자동적인 가변 증폭(이득) 제어를 한다. 
+> - 신호 감쇠? 이득을 증가시킨다 
+> - 신호 강도의 급격한 증가가 출력에 반영되지 않도록, 이득을 감소시킨다. 
+>
+> [자료출처](http://www.ktword.co.kr/test/view/view.php?nav=2&no=1313&sh=automatic+gain+control)
+
+```
+
+```ad-claude
+title: 전력 이득을 뭐라고 설명하면 좋을까? 전기전자 전공이 아닌 사람에게 뭐라고 설명해야해?
+
+전력 이득을 일상적인 예시로 설명해보겠습니다:
+
+"마이크에 대고 작게 속삭이는 소리를 생각해보세요. 이 작은 소리를 큰 콘서트홀에서 많은 사람이 들으려면 스피커로 소리를 크게 키워야 하죠. 이때 원래 입력된 작은 소리의 세기와 스피커로 출력된 큰 소리의 세기의 비율이 바로 전력 이득입니다."
+
+좀 더 구체적으로는:
+
+- 입력 신호: 속삭이는 소리 (예: 30dB, 일반적인 속삭임 소리 크기)
+- 출력 신호: 스피커 소리 (예: 90dB, 콘서트장 소리 크기)
+- 전력 이득: 60dB (출력/입력 = 90dB - 30dB)
+
+즉, 전력 이득이란: "입력으로 들어온 신호가 얼마나 세진(증폭된) 상태로 출력되는지를 나타내는 비율" 입니다.
+
+일상 생활의 예시들:
+
+1. 휴대폰 통화 시 볼륨 조절
+2. TV나 라디오의 소리 크기 조절
+3. 기타 앰프로 악기 소리 키우기
+
+이처럼 전력 이득은 "얼마나 세게 키웠나"를 나타내는 척도라고 이해하면 됩니다.
+```
+
+### Case 2. Analog signal from digita
+![[Pasted image 20250205162719.png]] 
+[이미지 created by Claude]() 
+
+```ad-example
+title: 컴퓨터에서 음성 녹음 
+
+**Input**: 목소리 (Analog Signal) 
+**Convertor**: PCM
+**Output**: (컴퓨터에 저장된) 디지털 데이터 
+
+마이크로 음성을 녹음하면 아날로그 신호를 PCM(Pulse Code Modulation)을 이용해서 디지털 변환해서 컴퓨터에 저장한다. 
+
+> PCM (Pulse Code Modulation)은 최초의 음성의 디지털 부호화 (encoding) 및 다중화 (multiplexing) 전송 방식이다.  
+>
+>[자료출처](http://www.ktword.co.kr/test/view/view.php?nav=2&no=582&sh=pulse)
+>
+
+```
+
+```ad-claude
+title: MIDI도 PCM 사용하니? 아니면 PCM은 음성에만 특화 되어 있는거야? 
+
+MIDI와 PCM은 매우 다른 방식으로 작동합니다. 차이점을 설명해드리겠습니다:
+
+PCM (Pulse Code Modulation):
+
+- 실제 소리 파형을 디지털로 변환
+- 마이크로 녹음된 음성이나 악기 소리 자체를 디지털화
+- 파일 크기가 큼
+- WAV, MP3 등의 파일 형식에 사용
+- 주로 음성이나 실제 악기 소리 녹음에 사용
+
+MIDI:
+
+- 소리 자체가 아닌 "연주 정보"를 디지털로 저장
+- 저장하는 정보:
+    - 어떤 음을 (음높이)
+    - 언제 (타이밍)
+    - 얼마나 세게 (세기)
+    - 어떤 악기로 (악기 종류)
+- 파일 크기가 매우 작음
+- 실제 소리는 신디사이저나 음원 장치가 만들어냄
+
+예시: 피아노 연주를 녹음할 때
+
+- PCM: 피아노 소리 자체를 녹음
+- MIDI: "도"를 3초에 세게 눌렀다가 4초에 뗐다는 정보만 저장
+
+따라서 PCM은 실제 소리를 디지털화하는 기술이고, MIDI는 연주 정보를 디지털화하는 완전히 다른 방식의 기술입니다.
+
+
+```
+
+### Case 3. Digital signal from analog
+- Modem 
+
+### Case 4. Digital Signal from digital
+
+- DSU
+- Repater
+
+## 정보 전송 부호화 (Transmission Code)
+- 송진사와 수신자 상호 간에 규정된 데이터 형태를 약속 하는 것 
+Example:
+- 2진 부호
+- ASCII Code (7 bit + 1 parity bit)
+- EBCDIC Code (다양한 문자, 숫자, 기호를 위한 문자 코드 )
+
+### 직렬 전송
+단말장치 -> 단말장치
+- 데이터를 순차적으로 보냄
+- 회선이 적고 비용이 적다 
+
+### 병렬 전송
+단말장 ㅌ> 단말장치
+- 데이터를 여러개의 전송로로 동시에 전송하는 방식 
+- 전송 비용이 비교적 비쌈 
+
+### 비동기식 전송
+- 한 문자 단위로 데이터를 전송
+- 전송 할 때 start bit 와 stop bit를 사용 
+- 전송하는 문자들 사이에 유휴 시간 존재 
+- 저속
+- 전송효율 낮음
+- 문자 단위의 비트 블록 
+
+### 동기식 전송
+- 고가
+- 원거리 전송
+- 블록 단위로 빠르게 전송
+- 프레임
+
+## 데이터 통신 방식
+
+### 교환 회선
+- 정보 전송 시에 교환기를 사용해서 송수신
+- 회선 교환 OR 축적 교환
+- 데이터 양이 적고, 사용자가 많을 때 사용 
+
+### 전용 회선
+- 교환기를 사용하지 않고 1대1
+- 사용자는 적지만, 데이터가 많을 때 사용
+
+### P2P (Point To Point)
+- 1대1
+- 회선 사용
+
+### Multi Point
+- 한개의 회선으로 여러명 (broadcast)
+- Polling과 Selection으로 누구에게 언제 보낼지 정한다 
+- Polling: 전송할 데이터가 있는지 주기적으로 검사
+- Selection: 수신자가 받을 준비가 되어 있는지 확인 
+
+### 회선 제어 단계
+1. 회선 연결
+2. 링크 확립
+3. 메세지 전송
+4. 링크 단절
+5. 회선 절단 
+
+# 전송매체
+
+## 유선 선로
+
+### Twisted Pair Cable
+- 2개의 구리선이 서로 감싸 있는것
+- 전화선 
+
+### Coaxial Cable
+- 중앙의 구리선에 플라스틱 절연체로 감싸 만든 것 
+
+### Optical Fiber Cable
+- 빛의 전반사 현상을 이용하여 데이터 전송
+- 신뢰성이 높다 
+- 온도 변화에 안정적
+- 에러율이 낮다 
+- 단점: 젤 비쌈 
+
+## 전송 에러
+Noise
+- 불필요한 신호 
+Attenuation (감쇠)
+- 신호가 약해짐 
+Crosstalk
+- 서로 다른 전송 신호가 다른 회선에 영향을 줌 
+
+# 변조 Modulation
+
+- 아날로그 혹은 디지털 신호를 전송 매체에 전송할 수 있도록 주파수 및 대역폭을 갖는 신호를 생성하는 일련의 과정이다
+
+## Analog Modulation
+
+### AM Amplitude Modulation 진폭 변조
+- 진폭에 비례해 신호 변조 
+
+### Frequency Modulation 주파수 변조
+- 주파수 중심으로 변조 
+- 잡음이 좀 강함 
+
+### Phase Modulation 위상 변조 
+- 반송파의 위상을 정보 신호의 변화에 비례하여 변화시킨것 
+
+## Digital Modulation
+
+### 진폭 편이 변조 Amplitude Shift Keying
+- 2진수 0과 1에 서로 다른 진폭 적용
+- 광섬유 디지털 데이터 전송하는데 사용 
+
+### 주파수 편이 변조 Frequency Shift Keying
+- 0과 1에 서로 다른 주파수를 사용해서 변조
+- 저속의 비동기 전송에 쓰임
+- ASK보다 에러에 강하고 비교적 회로가 간단
+
+### 위상 편이 변호 Phase Shift Keying
+- 0과 1에 서로 다른 위상을 적용하여 변조
+- 중속, 고속 동기전송에 많이 쓰임
+- 위상 편이 변조는 주로 모뎀이 쓰인다 
+
+### 직교 진폭 변조 Quadrature Amplitude Modulation
+- 주파수 위상이 90도 다른 2개의 파를 사용
+- AM과 PM을 조합해서 사용
+- 고속 디지털 신호에 적합, 고속 모뎀 등에 쓰임
+
+## Baseband
+- 디지털 신호를 변조하지 않고 그대로 전송
+- 근거리 전송에 쓰임
+## Broadband
+- 디지털 신호를 여러개의 신호로 변조해서 다른 주파수 대역으로 동시에 전송 (2.4Ghz, 5Ghz)
+
+# 다중화 Multiplexing
+
+### FDM 주파수 분할 다중화 Frequency Division Multiplexing
+- 좁은 주파수 대역을 사용하는 여러개의 신호를 넓은 주파수 대역을 가진 하나로 보내는 것! 
+- 채널 점유 
+### TDM 시분할 다중화 Time Division Multiplexing
+- time slot
+- P2P
+- 일정한 크기 
+- 동기식 vs 비동기식 
+
+### Demultiplexing 비다중화 
+- 하나의 신호를 2개의 저속 신호로 나누어 전송
+- 채널이 고장나도 50%의 속도로 계속 사용 할 수 있다 
+
+### 파장 분할 다중화 WDM 
+- 광섬유
+- 8개 이하의 신호 
+
+### 집중화기
+- 고속 회선 사용 가능
+- 동적 시간 할당
+- 입출력 대역푝 다름
+
+
+
