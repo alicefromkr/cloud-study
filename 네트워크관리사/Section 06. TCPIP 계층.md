@@ -1,34 +1,55 @@
 # TCP/IP 프로토콜 
 
-- Transmission Control Protocol/Internet Protocol
-- 미국방성 DoD 모델이다 
+## ARPANET, packet switching의 시작 
 
-```ad-claude
-title: DoD 모델이 뭐야? 
+```ad-note
+title: 미국 방성 (Department of Defense, AKA DoD)의 네트워크 프로젝트 
 
-DoD 모델은 국방성(Department of Defense)의 데이터 성숙도 모델(Data Maturity Model)입니다. 이 모델은 조직의 데이터 관리 능력을 평가하고 개선하기 위한 프레임워크를 제공합니다.
+1969년, 미국 방성에서 다른 위치, 다른 플랫폼에있는 컴퓨터와 통신할 수 있는 네트워크를 통신 방법에 관해 연구를 시작했다. 일명 Advanced Research Projects Agency (ARPA)라는 에이전시에서 담당을 했는데, 이때 처음으로 **Packet Switching** 기술을 사용하게 되었다.
 
-주요 특징은 다음과 같습니다:
+좀 재밌는 점은, 핵공격에 대비해서 만들어진 기술이라는거다. 데이터를 작은 단위로 나누어서 회선을 통해 여러 사용자에게 공유할 수 있고, 다양한 경로로 전송 될 수 있어, 핵 공격에도 네트워크가 계속 동작할 수 있다는 가정하에 만들어졌다. 
 
-1. 6단계 성숙도 레벨로 구성:
+[자료 출처](https://www.sciencemuseum.org.uk/objects-and-stories/arpanet-internet)
 
-- Level 0: 미관리(Unmanaged)
-- Level 1: 초기(Initial)
-- Level 2: 반복가능(Repeatable)
-- Level 3: 정의(Defined)
-- Level 4: 관리(Managed)
-- Level 5: 최적화(Optimized)
+Packet Switching 기술은 Paul Baran이라는 미국으로 이주하신 폴란드 분이 RAND라는 회사에 재직 중 처음 컨셉을 제시했다. Paul Baran님은 "메세지가 하나의 중심을 통해 연결되면, 전쟁중에는 다들 중심지를 공격하지 않겠냐, 그럴바에는 네트워크 노드를 분산시키자!" 하면서 "hot potato routing"이라고 쓰고 distributed communication (분산 통신)이라는 컨셉을 제시하셨다. 
 
-2. 각 레벨은 다음과 같은 영역을 평가합니다:
+생각해보면 예전 circuit switching (회선 방식)은 누군가 결국 회선을 연결시켜줘야했고, 그 연결해주는 부서가 당하면 통신이 끊겼으니. 옛날 전쟁 영화를 봐도 다들 통신팀만 먼저 치는거 보면, 최대 약점인걸로 보인다. 
 
-- 데이터 거버넌스
-- 데이터 품질
-- 데이터 아키텍처
-- 데이터 보안
-- 데이터 공유/상호운용성
+영국에 Donald Davies라는 분이 매우 비슷한 시스템을 만들었는데, 그는 이 메세지 블록을 Packet이라고 불러 지금까지도 Packet이라고 불린다. 아니.. Paul Baran님이 먼저 만들었는데.. 속상하시겠다.. 
 
-이 모델은 군사 조직뿐만 아니라 일반 기업에서도 데이터 관리 성숙도를 평가하고 개선하는데 참고 모델로 활용되고 있습니다.
+어쨌든, 1969년에 처음으로 이 "분산" 컨셉을 테스트 하기 위해 UCLA에 첫 노드를 설치하고 실험하면서, 여러 다른 대학들이 연결되어 과학분야 연구자들이 서로 정보 공유 할 수 있는 네트워크의 장이 생겼다. 
+
+[자료 출처](https://www.rand.org/pubs/articles/2018/paul-baran-and-the-origins-of-the-internet.html)
 ```
+
+
+## DoD 모델 
+
+|      <br>DoD Protocol Model<br>      |
+| :----------------------------------: |
+|      <br>Application Layer<br>       |
+| <br>Host-to-host transport layer<br> |
+|   <br>Local Network Protocol Layer   |
+```ad-note
+
+DDN Protocol Handbook에 따르면, DoD Protocol Model은 원래 3개의 레이어를 갖고 있데. 
+
+- Application Layer
+- Host-to-host transport layer
+- Network Access Layer 
+
+[자료 출처](https://www.cisco.com/E-Learning/bulk/public/tac/cim/cib/using_cisco_ios_software/linked/tcpip.htm)
+
+Host-to-host transport layer를 나누면 우리가 아는 
+- Application Layer
+- Transport Layer (TCP)
+- Internet Layer (IP)
+- Network Access Layer 가 나온다 
+
+```
+
+
+
 
 ```ad-claude
 title: TCP/IP 도 DoD 모델이라는데? 
@@ -391,13 +412,13 @@ IP Fragmentation, MTU, ifconfig에 대해 순차적으로 설명해드리겠습�
 
 ### IP Class 구조 
 
-| Class | First Octet Range | First Octet Binary | Default Subnet Mask | Network/Host Portion | Max Networks | Max Hosts per Network |
-|--------|------------------|------------------|-------------------|-------------------|--------------|-------------------|
-| A | 1-126 | 0xxxxxxx | 255.0.0.0 (/8) | N.H.H.H | 126 | 16,777,214 |
-| B | 128-191 | 10xxxxxx | 255.255.0.0 (/16) | N.N.H.H | 16,384 | 65,534 |
-| C | 192-223 | 110xxxxx | 255.255.255.0 (/24) | N.N.N.H | 2,097,152 | 254 |
-| D | 224-239 | 1110xxxx | N/A | Multicast Address | N/A | N/A |
-| E | 240-255 | 1111xxxx | N/A | Reserved for Research | N/A | N/A |
+| Class | First Octet Range | First Octet Binary | Default Subnet Mask | Network/Host Portion  | Max Networks | Max Hosts per Network |
+| ----- | ----------------- | ------------------ | ------------------- | --------------------- | ------------ | --------------------- |
+| A     | 1-126             | 0xxxxxxx           | 255.0.0.0 (/8)      | N.H.H.H               | 126          | 16,777,214            |
+| B     | 128-191           | 10xxxxxx           | 255.255.0.0 (/16)   | N.N.H.H               | 16,384       | 65,534                |
+| C     | 192-223           | 110xxxxx           | 255.255.255.0 (/24) | N.N.N.H               | 2,097,152    | 254                   |
+| D     | 224-239           | 1110xxxx           | N/A                 | Multicast Address     | N/A          | N/A                   |
+| E     | 240-255           | 1111xxxx           | N/A                 | Reserved for Research | N/A          | N/A                   |
 
 추가 설명:
 1. Class A
@@ -450,12 +471,12 @@ IP Fragmentation, MTU, ifconfig에 대해 순차적으로 설명해드리겠습�
 | 설정 복잡도 | 간단 (소규모 네트워크) | 복잡 (초기 설정 필요) |
 | 신뢰성 | 높음 (예측 가능) | 높음 (자동 우회 경로 설정) |
 
-| 단점 | 정적 라우팅 | 동적 라우팅 |
-|-----|------------|-------------|
-| 확장성 | 낮음 | 높음 |
-| 장애 대응 | 수동 대응 필요 | 자동 대응 가능 |
-| 관리 부담 | 많음 (수동 업데이트) | 적음 (자동 업데이트) |
-| 초기 비용 | 낮음 | 높음 (장비, 설정 비용) |
+| 단점    | 정적 라우팅       | 동적 라우팅         |
+| ----- | ------------ | -------------- |
+| 확장성   | 낮음           | 높음             |
+| 장애 대응 | 수동 대응 필요     | 자동 대응 가능       |
+| 관리 부담 | 많음 (수동 업데이트) | 적음 (자동 업데이트)   |
+| 초기 비용 | 낮음           | 높음 (장비, 설정 비용) |
 
 | 사용 환경 | 정적 라우팅 | 동적 라우팅 |
 |----------|------------|-------------|
